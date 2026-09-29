@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import api from '../api/client.js';
+import api, { setSessionToken } from '../api/client.js';
 
 const AuthContext = createContext(null);
 
@@ -46,6 +46,7 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (credentials) => {
     const { data } = await api.auth.login(credentials);
+    setSessionToken(data.accessToken);
     setAccount(data.user);
     setRole('user');
     return data.user;
@@ -53,6 +54,7 @@ export function AuthProvider({ children }) {
 
   const loginNgo = useCallback(async (credentials) => {
     const { data } = await api.ngo.login(credentials);
+    setSessionToken(data.accessToken);
     setAccount(data.ngo);
     setRole('ngo');
     return data.ngo;
@@ -60,6 +62,7 @@ export function AuthProvider({ children }) {
 
   const register = useCallback(async (details) => {
     const { data } = await api.auth.register(details);
+    setSessionToken(data.accessToken);
     setAccount(data.user);
     setRole('user');
     return data.user;
@@ -69,6 +72,7 @@ export function AuthProvider({ children }) {
     try {
       await api.auth.logout();
     } finally {
+      setSessionToken(null);
       setAccount(null);
       setRole(null);
     }

@@ -7,6 +7,28 @@
  */
 
 const BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const SESSION_TOKEN_KEY = 'straycare_session_token';
+
+// Cookies remain the preferred, httpOnly session mechanism. This short-lived
+// browser-session token is only a fallback for separately hosted frontend/API
+// deployments where a browser blocks third-party cookies. sessionStorage is
+// intentionally used instead of localStorage so it is cleared with the tab.
+export function getSessionToken() {
+  try {
+    return window.sessionStorage.getItem(SESSION_TOKEN_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function setSessionToken(token) {
+  try {
+    if (token) window.sessionStorage.setItem(SESSION_TOKEN_KEY, token);
+    else window.sessionStorage.removeItem(SESSION_TOKEN_KEY);
+  } catch {
+    // Storage can be disabled; the httpOnly cookie route still works.
+  }
+}
 
 export class ApiError extends Error {
   constructor(message, { status, errors } = {}) {
@@ -40,6 +62,7 @@ async function parseBody(response) {
 
 async function request(path, { method = 'GET', body, headers = {}, signal } = {}) {
   const isFormData = body instanceof FormData;
+  const sessionToken = getSessionToken();
 
   let response;
   try {
@@ -49,6 +72,7 @@ async function request(path, { method = 'GET', body, headers = {}, signal } = {}
       credentials: 'include',
       headers: {
         ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+        ...(sessionToken ? { Authorization: `Bearer ${sessionToken}` } : {}),
         ...headers,
       },
       body: isFormData ? body : body ? JSON.stringify(body) : undefined,
