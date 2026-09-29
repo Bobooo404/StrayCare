@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const multer = require('multer');
+const env = require('../config/env');
 const ApiError = require('../utils/ApiError');
 
 const UPLOAD_DIR = path.join(__dirname, '..', '..', 'uploads');
@@ -50,7 +51,10 @@ const upload = multer({
 
 /** Public URL for a stored file, used as the `imageUrl` on created documents. */
 function toPublicUrl(filename) {
-  return filename ? `/uploads/${filename}` : null;
+  if (!filename) return null;
+  // Absolute once PUBLIC_URL is set, because the client drops this straight
+  // into an `img src` and would otherwise resolve it against its own domain.
+  return `${env.publicUrl}/uploads/${filename}`;
 }
 
 const uploadSingleImage = upload.single('image');

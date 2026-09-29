@@ -18,7 +18,7 @@ function verifyToken(token) {
 
 const cookieOptions = {
   httpOnly: true,
-  sameSite: 'lax',
+  sameSite: env.cookieSameSite,
   secure: env.cookieSecure,
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };

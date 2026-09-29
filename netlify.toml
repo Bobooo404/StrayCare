@@ -1,0 +1,28 @@
+# Netlify serves the built React app. The Express API in `server/` cannot run
+# here (it needs a long lived process, a MongoDB connection and writable disk
+# for uploads), so it is deployed separately and VITE_API_URL points at it.
+[build]
+  base = "client"
+  command = "npm ci && npm run build"
+  publish = "dist"
+
+# React Router owns the routing, so any path that is not a real file on disk has
+# to fall back to index.html and be resolved in the browser. Without this, a
+# refresh or a direct visit to /login, /adoptions, /ngo/dashboard and friends
+# returns Netlify's "Page not found".
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Vite fingerprints everything in /assets, so it can be cached forever.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# index.html must never be cached, or clients keep booting an old asset list.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
