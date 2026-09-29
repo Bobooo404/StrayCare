@@ -92,6 +92,43 @@ export const ACCENT_STYLES = {
   },
 };
 
+/**
+ * Urgency presentation, shared by the AI triage panel and the summary stored on
+ * a report so the two can never drift apart.
+ *
+ * Classes are written out in full because Tailwind only sees literal strings.
+ */
+export const URGENCY_META = {
+  low: {
+    fullLabel: 'Low urgency',
+    chip: 'bg-emerald-100 text-emerald-800 ring-emerald-200',
+    band: 'border-emerald-200 bg-emerald-50',
+    heading: 'text-emerald-900',
+    icon: 'text-emerald-600',
+  },
+  moderate: {
+    fullLabel: 'Moderate urgency',
+    chip: 'bg-amber-100 text-amber-800 ring-amber-200',
+    band: 'border-amber-200 bg-amber-50',
+    heading: 'text-amber-900',
+    icon: 'text-amber-600',
+  },
+  high: {
+    fullLabel: 'High urgency',
+    chip: 'bg-orange-100 text-orange-900 ring-orange-200',
+    band: 'border-orange-200 bg-orange-50',
+    heading: 'text-orange-900',
+    icon: 'text-orange-600',
+  },
+  critical: {
+    fullLabel: 'Critical urgency',
+    chip: 'bg-red-100 text-red-900 ring-red-200',
+    band: 'border-red-200 bg-red-50',
+    heading: 'text-red-900',
+    icon: 'text-red-600',
+  },
+};
+
 export const animalLabel = (value) =>
   ANIMAL_TYPES.find((type) => type.value === value)?.label ?? 'Other';
 

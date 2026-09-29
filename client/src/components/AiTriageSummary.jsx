@@ -1,18 +1,5 @@
 import { Bot, TriangleAlert } from 'lucide-react';
-
-const URGENCY_TONE = {
-  low: 'bg-emerald-50 text-emerald-800 ring-emerald-200',
-  moderate: 'bg-amber-50 text-amber-800 ring-amber-200',
-  high: 'bg-orange-50 text-orange-800 ring-orange-200',
-  critical: 'bg-red-50 text-red-800 ring-red-200',
-};
-
-const URGENCY_LABEL = {
-  low: 'Low urgency',
-  moderate: 'Moderate urgency',
-  high: 'High urgency',
-  critical: 'Critical',
-};
+import { URGENCY_META } from './constants.js';
 
 /**
  * The AI triage summary attached to a report.
@@ -25,7 +12,7 @@ export default function AiTriageSummary({ triage }) {
   if (!triage) return null;
 
   const { summary, likelySituation, firstAid = [], urgency, confidence } = triage;
-  const tone = URGENCY_TONE[urgency] ?? URGENCY_TONE.moderate;
+  const meta = URGENCY_META[urgency] ?? URGENCY_META.moderate;
 
   return (
     <section
@@ -38,12 +25,12 @@ export default function AiTriageSummary({ triage }) {
           AI triage
         </span>
         <span
-          className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${tone}`}
+          className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${meta.chip}`}
         >
           {urgency === 'critical' && (
             <TriangleAlert className="h-3.5 w-3.5" aria-hidden="true" />
           )}
-          {URGENCY_LABEL[urgency] ?? 'Moderate urgency'}
+          {meta.fullLabel}
         </span>
         {confidence && (
           <span className="text-xs text-emerald-800/70">{confidence} confidence</span>
