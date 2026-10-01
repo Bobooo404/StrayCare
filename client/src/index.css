@@ -14,8 +14,13 @@ html {
 }
 
 body {
-  @apply bg-slate-50 text-slate-800 antialiased;
+  @apply text-slate-800 antialiased;
+  background-color: #e8fcf2;
   font-family: var(--font-sans);
+}
+
+.page-background {
+  background-color: #e8fcf2;
 }
 
 /* Consistent focus ring for keyboard users on every interactive element. */

@@ -158,7 +158,7 @@ export default function AdoptionForm() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50">
+      <div className="page-background min-h-screen">
         <Navbar />
         <PageLoader label="Loading listing" />
       </div>
@@ -166,7 +166,7 @@ export default function AdoptionForm() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="page-background min-h-screen">
       <Navbar />
 
       <main className="mx-auto max-w-3xl px-4 py-10 sm:py-12">

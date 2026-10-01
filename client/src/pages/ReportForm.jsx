@@ -107,7 +107,7 @@ export default function ReportForm() {
   // An unknown category in the URL should not render a broken form.
   if (!REPORT_CATEGORIES.includes(category) || !meta) {
     return (
-      <div className="min-h-screen bg-slate-50">
+      <div className="page-background min-h-screen">
         <Navbar />
         <main className="mx-auto max-w-2xl px-4 py-16 text-center">
           <Alert>That report type does not exist.</Alert>
@@ -202,7 +202,7 @@ export default function ReportForm() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="page-background min-h-screen">
       <Navbar />
 
       <main className="mx-auto max-w-3xl px-4 py-10 sm:py-12">

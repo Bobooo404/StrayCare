@@ -70,7 +70,7 @@ export default function Landing() {
       : { to: '/register', label: 'Create a free account' };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="page-background min-h-screen">
       <Navbar />
 
       <main>

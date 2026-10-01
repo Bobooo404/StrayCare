@@ -45,7 +45,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="page-background min-h-screen">
       <Navbar />
 
       <main className="mx-auto flex max-w-md flex-col px-4 py-12 sm:py-16">
